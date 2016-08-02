@@ -1,0 +1,30 @@
+{
+  "name": "text-mate",
+  "version": "0.1.0",
+  "description": "SMS chat bot that tells you about the weather, translations, etc.",
+  "main": "lib/app.js",
+  "engines": {
+    "node": "^6.3.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/treublue2704/text-mate.git"
+  },
+  "keywords": [
+    "npm",
+    "node",
+    "chat bot",
+    "rest",
+    "sms",
+    "wit.ai"
+  ],
+  "author": "Arjun Madan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/treublue2704/text-mate/issues"
+  },
+  "homepage": "https://github.com/treublue2704/text-mate",
+  "dependencies": {
+    "express": "^4.14.0"
+  }
+}
