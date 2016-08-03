@@ -17,7 +17,9 @@ app.get('/', function(request, response) {
 
 app.post('/messages', function(request, response) {
     //console.log(JSON.stringify(request));
-    console.log(request.body.text);
+    console.log(request);
+    //console.log(request.body);
+    //console.log(request.body.text);
     response.send('Message received.');
 });
 
