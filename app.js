@@ -4,6 +4,7 @@ var express    = require("express");
 var bandwidth  = require("node-bandwidth");
 var bodyParser = require("body-parser");
 var app        = express();
+var context    = require("./lib/context");
 
 bandwidth.Client.globalOptions.apiToken  = process.env.BANDWIDTH_CLIENT_API_TOKEN;
 bandwidth.Client.globalOptions.apiSecret = process.env.BANDWIDTH_CLIENT_API_SECRET;
@@ -16,15 +17,8 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-app.get('/', function(request, response) {
-    response.send("Message received.");
-});
-
 app.post('/messages', function(request, response) {
-    //console.log(JSON.stringify(request));
-    console.log(request);
-    //console.log(request.body);
-    //console.log(request.body.text);
+    context.getIntents(request.body.text);
     response.send('Message received.');
 });
 
