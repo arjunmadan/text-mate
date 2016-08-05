@@ -26,6 +26,7 @@
   "homepage": "https://github.com/treublue2704/text-mate",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "clarifai": "^1.2.1",
     "express": "^4.14.0",
     "node-bandwidth": "^2.0.1",
     "node-wit": "^4.0.0"
