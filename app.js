@@ -20,19 +20,29 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.post('/messages', function(request, response) {
-    context.getIntents(request.body.text);
-    client.Message.send({
-        from : process.env.BANDWIDTH_PHONE_NUMBER, 
-        to   : request.body.from,
-        text : "Hello world."
-    })
-    .then(function(message) {
-        console.log("Message sent with ID " + message.id);
-        response.send(200);
-    })
-    .catch(function(err) {
-        console.log(err.message);
+    context.getIntents(request.body.text, function(err, result) {
+        client.Message.send({
+            from : process.env.BANDWIDTH_PHONE_NUMBER, 
+            to   : request.body.from,
+            text : result
+        })
+        .then(function(message) {
+            console.log("Message sent with ID " + message.id);
+            response.send(200);
+        })
+        .catch(function(err) {
+            client.Message.send({
+                from : process.env.BANDWIDTH_PHONE_NUMBER, 
+                to   : request.body.from,
+                text : "An error occurred."
+            })
+            .then(function() {
+                response.status(500).send('This wasn\'t supposed to happen.');    
+            })
+            
+        });
     });
+    
 });
 
 app.listen(app.get('port'), function() {
