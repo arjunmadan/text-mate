@@ -23,7 +23,9 @@ app.use(bodyParser.urlencoded({
 app.post('/messages', function(request, response) {
     console.log(request.body);
     if(request.body.media.length > 0) {
-        imageRecognition.getImageTags(request.body.media[0]);
+        imageRecognition.getImage(request.body.media[0], function (err, result) {
+            console.log(result);
+        });
     }
     else {
         context.getIntents(request.body.text, function(err, result) {
