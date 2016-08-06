@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/treublue2704/text-mate",
   "dependencies": {
+    "aws-sdk": "^2.4.13",
     "body-parser": "^1.15.2",
     "clarifai": "^1.2.1",
     "express": "^4.14.0",
