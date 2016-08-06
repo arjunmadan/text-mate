@@ -28,15 +28,20 @@ app.post('/messages', function(request, response) {
     if(request.body.media.length > 0) {
         let imageUrlInfo = request.body.media[0].split('/');
         imageRecognition.putImageS3(imageUrlInfo[imageUrlInfo.length - 1], function (err, result) {
-            console.log(result);
-            imageRecognition.getImageTags(result, function (err, res) {
-                if (err) {
-                    console.log(err);//handle error
-                }
-                else {
-                    console.log('Got tags:' + res.results[0].result.tag.classes);
-                }
-            });
+            if (err) {
+                console.log(err);
+            }
+            else {
+                console.log(res);
+                imageRecognition.getImageTags(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
+                    if (err) {
+                        console.log(err);//handle error
+                    }
+                    else {
+                        console.log('Got tags:' + res.results[0].result.tag.classes);
+                    }
+                });
+            }
         });
     }
     else {
