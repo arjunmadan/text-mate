@@ -27,7 +27,7 @@ app.post('/messages', function(request, response) {
     console.log(request.body);
     if(request.body.media.length > 0) {
         let imageUrlInfo = request.body.media[0].split('/');
-        imageRecognition.putImageS3(imageUrlInfo[imageUrlInfo.length - 1], function (err, result) {
+        imageRecognition.putImageS3(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
             if (err) {
                 console.log(err);
             }
