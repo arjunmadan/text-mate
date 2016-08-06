@@ -31,7 +31,7 @@ app.post('/messages', function(request, response) {
             console.log(result);
             imageRecognition.getImageTags(result, function (err, res) {
                 if (err) {
-                    //handle error
+                    console.log(err);//handle error
                 }
                 else {
                     console.log('Got tags:' + res.results[0].result.tag.classes);
