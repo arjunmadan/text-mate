@@ -37,7 +37,7 @@ app.post('/messages', function(request, response) {
                     }
                     else {
                         console.log('Got tags:' + res);
-                        catapult.sendMessage(res);
+                        catapult.sendMessage(request.body.from, res);
                     }
                 });
             }
