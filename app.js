@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 
 app.post('/messages', function(request, response) {
     console.log(request.body);
-    //response.send(200);
+    response.sendStatus(200);
     if(request.body.media.length > 0) {
         let imageUrlInfo = request.body.media[0].split('/');
         imageRecognition.putImageS3(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
