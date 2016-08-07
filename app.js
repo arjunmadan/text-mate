@@ -5,9 +5,7 @@ var bodyParser       = require('body-parser');
 var context          = require('./lib/context');
 var imageRecognition = require('./lib/imageRecognition');
 var catapult         = require('./lib/catapult');
-var aws              = require('aws-sdk');
-
-const s3 = new aws.S3();
+var weatherService   = require('./lib/weatherService')
 
 var app = express();
 app.set('port', (process.env.PORT || 5000));
@@ -20,23 +18,19 @@ app.use(bodyParser.urlencoded({
 app.post('/messages', function(request, response) {
     console.log(request.body);
     response.sendStatus(200);
-    if(request.body.media.length > 0) {
+    if(request.body.media) {
         let imageUrlInfo = request.body.media[0].split('/');
         imageRecognition.putImageS3(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
-            console.log("S3 image posted");
             if (err) {
                 console.log(err);
             }
             else {
-                console.log("After S3: " + res);
                 imageRecognition.getImageTags(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
-                    console.log("Got image tags");
                     if (err) {
                         console.log(err);
                         catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
                     }
                     else {
-                        console.log('Got tags:' + res);
                         catapult.sendMessage(request.body.from, res);
                     }
                 });
@@ -44,12 +38,22 @@ app.post('/messages', function(request, response) {
         });
     }
     else {
-        context.getIntents(request.body.text, function(err, result) {
+        context.getIntents(request.body.text, function(err, res) {
+            console.log(res);
             if (err) {
                 catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
             }
-            else {
-                catapult.sendMessage(request.body.from, result);
+            else if (res.intentType == 'weather') {
+                weatherService.getWeather(result, function (err, res) {
+                    if (err) {
+                        console.log(err);
+                        catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
+                    }
+                    else {
+                        console.log('Weather result:' + res);
+                        //catapult.sendMessage(request.body.from, res);
+                    } 
+                });
             }
         });
     }
