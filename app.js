@@ -19,16 +19,18 @@ app.use(bodyParser.urlencoded({
 
 app.post('/messages', function(request, response) {
     console.log(request.body);
-    response.send(200);
+    //response.send(200);
     if(request.body.media.length > 0) {
         let imageUrlInfo = request.body.media[0].split('/');
         imageRecognition.putImageS3(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
+            console.log("S3 image posted");
             if (err) {
                 console.log(err);
             }
             else {
-                console.log(res);
+                console.log("After S3: " + res);
                 imageRecognition.getImageTags(imageUrlInfo[imageUrlInfo.length - 1], function (err, res) {
+                    console.log("Got image tags");
                     if (err) {
                         console.log(err);
                         catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
