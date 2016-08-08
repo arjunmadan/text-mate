@@ -44,14 +44,14 @@ app.post('/messages', function(request, response) {
                 catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
             }
             else if (res.intentType == 'weather') {
-                weatherService.getWeather(res, function (err, res) {
+                weatherService.getWeatherDetails(res, function (err, res) {
                     if (err) {
                         console.log(err);
                         catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
                     }
                     else {
                         console.log('Weather result:' + res);
-                        //catapult.sendMessage(request.body.from, res);
+                        catapult.sendMessage(request.body.from, res);
                     } 
                 });
             }
