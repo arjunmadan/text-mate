@@ -51,7 +51,7 @@ app.post('/messages', function(request, response) {
                     }
                     else {
                         console.log('Weather result:' + JSON.stringify(res));
-                        catapult.sendMessage(request.body.from, res.weatherText);
+                        catapult.sendMessage(request.body.from, res.text);
                     } 
                 });
             }
