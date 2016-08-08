@@ -43,7 +43,7 @@ app.post('/messages', function(request, response) {
             if (err) {
                 catapult.sendMessage(request.body.from, "Sorry, an error occurred.");
             }
-            else if (res.intentType == 'weather') {
+            else if (res.intentType === 'weather') {
                 weatherService.getWeatherDetails(res, function (err, res) {
                     if (err) {
                         console.log(err);
